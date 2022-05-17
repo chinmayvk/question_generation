@@ -138,9 +138,13 @@ class QGPipeline:
                 sents_copy = sents[:]
                 
                 answer_text = answer_text.strip()
-                
-                ans_start_idx = sent.index(answer_text)
-                
+
+                try:
+                    ans_start_idx = sent.index(answer_text)
+                except ValueError as e:
+                    print(f"ValueError: Not found: {answer_text}")
+                    continue
+
                 sent = f"{sent[:ans_start_idx]} <hl> {answer_text} <hl> {sent[ans_start_idx + len(answer_text): ]}"
                 sents_copy[i] = sent
                 
